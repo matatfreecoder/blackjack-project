@@ -7,6 +7,14 @@ let messageEl = document.getElementById('message-el');
 let sumEl = document.getElementById('sum-el');
 let cardEl = document.getElementById('cards-el');
 
+let player = {
+	name: 'Per',
+	chips: 150,
+};
+
+let playerEl = document.getElementById('player-el');
+playerEl.textContent = `Player ${player.name}, chips $${player.chips}`;
+
 function getRandomCard() {
 	let randomNumber = Math.floor(Math.random() * 13) + 1;
 	if (randomNumber === 1) {
@@ -24,6 +32,7 @@ function startGame() {
 	let secondCard = getRandomCard();
 	cards = [firstCard, secondCard];
 	sum = firstCard + secondCard;
+
 	renderGame();
 }
 
@@ -48,8 +57,14 @@ function renderGame() {
 
 function newCard() {
 	console.log('Drawing a new card from the deck');
-	let card = getRandomCard();
-	sum += card;
-	cards.push(card);
-	renderGame();
+
+	if (isAlive === true && hasBlackJack != true) {
+		let card = getRandomCard();
+		sum += card;
+		cards.push(card);
+		renderGame();
+	} else {
+		message = 'You can start a new game';
+		messageEl.textContent = message;
+	}
 }
